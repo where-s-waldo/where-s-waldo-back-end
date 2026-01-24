@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Map {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  src         String
+
+  characters   Character[]
+  leaderBoards LeaderBoard[]
+}
+
+model Character {
+  id   Int    @id @default(autoincrement())
+  name String
+  x    Float
+  y    Float
+
+  mapId Int
+  map   Map @relation(fields: [mapId], references: [id])
+}
+
+model LeaderBoard {
+  id Int @id @default(autoincrement())
+
+  mapId Int
+  map   Map @relation(fields: [mapId], references: [id])
+
+  entries LeaderBoardEntry[] @relation("BoardEntries")
+}
+
+model LeaderBoardEntry {
+  id   Int      @id @default(autoincrement())
+  name String
+  time DateTime
+
+  leaderBoardId Int
+  leaderBoard   LeaderBoard @relation("BoardEntries", fields: [leaderBoardId], references: [id])
+}
