@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "LeaderBoardEntry" ALTER COLUMN "time" SET DEFAULT CURRENT_TIMESTAMP;

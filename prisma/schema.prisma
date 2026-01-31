@@ -14,7 +14,7 @@ model Map {
   src         String
 
   characters   Character[]
-  leaderBoards LeaderBoard[]
+  leaderBoards LeaderBoardEntry[]
 }
 
 model Character {
@@ -28,20 +28,11 @@ model Character {
   map   Map @relation(fields: [mapId], references: [id])
 }
 
-model LeaderBoard {
-  id Int @id @default(autoincrement())
-
-  mapId Int
-  map   Map @relation(fields: [mapId], references: [id])
-
-  entries LeaderBoardEntry[] @relation("BoardEntries")
-}
-
 model LeaderBoardEntry {
   id   Int      @id @default(autoincrement())
   name String
-  time DateTime
+  time Float 
 
-  leaderBoardId Int
-  leaderBoard   LeaderBoard @relation("BoardEntries", fields: [leaderBoardId], references: [id])
+  mapId       Int
+  leaderBoard Map @relation(fields: [mapId], references: [id])
 }
